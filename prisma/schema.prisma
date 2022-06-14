@@ -46,21 +46,21 @@ model likes {
   postId    Int
   createdAt DateTime @default(now())
 
-  user users @relation(fields: [userId], references: [id])
-  post posts @relation(fields: [postId], references: [id])
+  users users @relation(fields: [userId], references: [id])
+  posts posts @relation(fields: [postId], references: [id])
 }
 
-model trendings {
+model hashtags {
   id            Int             @id @default(autoincrement())
-  name          String
+  name          String          @unique
   postTrendings postTrendings[]
 }
 
 model postTrendings {
-  id         Int @id @default(autoincrement())
-  postId     Int
-  trendingId Int
+  id        Int @id @default(autoincrement())
+  postId    Int
+  hashtagId Int
 
-  trending trendings @relation(fields: [trendingId], references: [id])
-  post     posts     @relation(fields: [postId], references: [id])
+  hashtags hashtags @relation(fields: [hashtagId], references: [id])
+  posts     posts    @relation(fields: [postId], references: [id])
 }
