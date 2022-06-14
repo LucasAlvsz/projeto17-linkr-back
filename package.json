@@ -31,6 +31,6 @@
         "eslint": "^8.17.0",
         "eslint-plugin-import": "^2.26.0",
         "nodemon": "^2.0.16",
-        "prisma": "^3.15.1",
+        "prisma": "^3.15.1"
     }
 }
