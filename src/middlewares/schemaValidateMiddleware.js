@@ -1,4 +1,4 @@
-export const schemaValidateMiddleware = (schema) => {
+const schemaValidateMiddleware = (schema) => {
     return (schemaValidateMiddleware[schema] = (req, res, next) => {
         const { error } = schema.validate(req.body, { abortEarly: false });
         if (error)
@@ -8,3 +8,5 @@ export const schemaValidateMiddleware = (schema) => {
         next();
     });
 };
+
+export default schemaValidateMiddleware;
