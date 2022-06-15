@@ -4,6 +4,6 @@ import { getTrending } from "../controllers/hashtagsController.js";
 
 const hashtagsRouter = Router();
 
-hashtagsRouter.get("/hashtag/trending", getTrending);
+hashtagsRouter.get("/trending", getTrending);
 
 export default hashtagsRouter;
