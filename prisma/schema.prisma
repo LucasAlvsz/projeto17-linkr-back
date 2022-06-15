@@ -46,8 +46,8 @@ model likes {
   postId    Int
   createdAt DateTime @default(now())
 
-  user users @relation(fields: [userId], references: [id])
-  post posts @relation(fields: [postId], references: [id])
+  users users @relation(fields: [userId], references: [id])
+  posts posts @relation(fields: [postId], references: [id])
 }
 
 model hashtags {

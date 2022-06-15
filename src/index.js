@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -17,5 +18,6 @@ app.get("/", async (req, res) => {
 });
 
 app.listen(process.env.PORT || 5000, () => {
+    // eslint-disable-next-line no-console
     console.log(`Server is running on port ${process.env.PORT || 5000} 🐱‍👤`);
 });
