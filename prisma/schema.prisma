@@ -37,7 +37,7 @@ model posts {
 
   user          users           @relation(fields: [userId], references: [id])
   likes         likes[]
-  postTrendings postTrendings[]
+  postHashtag postHashtag[]
 }
 
 model likes {
@@ -50,17 +50,17 @@ model likes {
   post posts @relation(fields: [postId], references: [id])
 }
 
-model trendings {
+model hashtags {
   id            Int             @id @default(autoincrement())
   name          String
-  postTrendings postTrendings[]
+  postHashtag postHashtag[]
 }
 
-model postTrendings {
+model postHashtag {
   id         Int @id @default(autoincrement())
   postId     Int
-  trendingId Int
+  hashtagId Int
 
-  trending trendings @relation(fields: [trendingId], references: [id])
+  hashtags hashtags @relation(fields: [hashtagId], references: [id])
   post     posts     @relation(fields: [postId], references: [id])
 }

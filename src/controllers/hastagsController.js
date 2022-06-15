@@ -1,14 +1,9 @@
-import db from "../db/index.js";
+import hashtagsRepository from "../repositories/hashtagsRepository.js";
 import verboseLog from "../utils/verboseLog.js";
 
-export const getHashtags = async (req, res) => {
-    const { hashtag } = req.params;
+export const getTranding = async (req, res) => {
     try {
-        const result = await db.query(
-            `--sql
-            SELECT * FROM hashtags WHERE hashtag = $1`,
-            [hashtag],
-        );
+        const result = await hashtagsRepository.getTranding();
         res.send(result.rows);
     } catch (err) {
         verboseLog(err);
