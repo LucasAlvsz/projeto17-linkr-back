@@ -21,6 +21,7 @@ const getHashtagPosts = async (hashtag) => {
             JOIN hashtags on hashtags.id = "postHashtag"."hashtagId"
             JOIN posts ON posts.id = "postHashtag"."postId"
         WHERE hashtags.name ~* $1
+        GROUP BY posts.id
         `,
         [hashtag],
     );
