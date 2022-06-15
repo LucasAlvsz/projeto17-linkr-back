@@ -5,6 +5,7 @@ export const postUser = async (req, res) => {
     // const { authorization } = req.headers;
     // if (!authorization) return res.status(401).send("Token nao encontrado");
     // const token = authorization.replace("Bearer", "").trim();
+    // tem que colocar o service que pega as #
     let userId = 5; // will get caught by jwt
     const data = { ...req.body, userId };
     try {
