@@ -3,7 +3,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import "dotenv/config";
-
+import userPost from "./routes/userPostRoute.js";
 dotenv.config();
 
 const app = express();
@@ -13,6 +13,8 @@ app.use(express.json());
 app.get("/", async (req, res) => {
     res.send("Hello World!");
 });
+app.use(userPost);
+
 
 app.listen(process.env.PORT || 5000, () => {
     // eslint-disable-next-line no-console
