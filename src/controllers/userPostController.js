@@ -1,3 +1,3 @@
-export const postUser = async function (req, res) {
+export const postUser = async (req, res) => {
     res.status(200).send("deu bom");
 };
