@@ -9,7 +9,7 @@ async function main() {
         { userId: 3, postId: 2 },
         { userId: 4, postId: 2 },
     ];
-    const postTrending = [
+    const postHashtag = [
         { postId: 1, hashtagId: 1 },
         { postId: 2, hashtagId: 4 },
         { postId: 3, hashtagId: 5 },
@@ -37,7 +37,7 @@ async function main() {
             userId: 4,
         },
     ];
-    const trendings = [
+    const hashtags = [
         { name: "javascript" },
         { name: "react" },
         { name: "react-native" },
@@ -94,9 +94,9 @@ async function main() {
         data: users,
     });
     await prisma.sessions.createMany({ data: sessions });
-    await prisma.hashtags.createMany({ data: trendings });
+    await prisma.hashtags.createMany({ data: hashtags });
     await prisma.posts.createMany({ data: posts });
-    await prisma.postTrendings.createMany({ data: postTrending });
+    await prisma.postHashtag.createMany({ data: postHashtag });
     await prisma.likes.createMany({ data: likes });
 }
 
