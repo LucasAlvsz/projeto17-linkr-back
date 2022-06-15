@@ -1,17 +1,17 @@
 import db from "../db/index.js";
 
-const getTranding = async () => {
+const getTrending = async () => {
     return await db.query(`--sql
-    SELECT hashtags.*, COUNT("postHashtag"."hashtagId") as ordernation FROM hashtags
-        JOIN "postHashtag" ON "postHashtag"."hashtagId" = hashtags.id
+    SELECT hashtags.* FROM hashtags
+        LEFT JOIN "postHashtag" ON "postHashtag"."hashtagId" = hashtags.id
     GROUP BY hashtags.id
-    ORDER BY ordernation DESC
+    ORDER BY COUNT("postHashtag"."hashtagId") DESC 
     LIMIT 10
     `);
 };
 
 const hashtagsRepository = {
-    getTranding,
+    getTrending,
 };
 
 export default hashtagsRepository;
