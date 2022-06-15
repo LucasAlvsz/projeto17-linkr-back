@@ -1,12 +1,12 @@
-import pg from "pg";
+import pg from "pg"
 
-const { Pool } = pg;
+const { Pool } = pg
 
 const db = new Pool({
-    connectionString: process.env.DATABASE_URL,
-    ...(process.env.PROD_MODE && {
-        ssl: { rejectUnauthorized: false },
-    }),
-});
+	connectionString: process.env.DATABASE_URL,
+	...(process.env.PROD_MODE && {
+		ssl: { rejectUnauthorized: false },
+	}),
+})
 
-export default db;
+export default db
