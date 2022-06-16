@@ -3,7 +3,7 @@ import db from "../db/index.js";
 const getUserPostsById = async (userId) => {
     const { rows } = await db.query(
         `--sql
-    SELECT posts.link, posts.article, 
+    SELECT posts.link, 
     users.name as "userName"
     FROM posts
     JOIN users ON posts."userId" = users.id
@@ -17,7 +17,7 @@ const getUserPostsById = async (userId) => {
 const getUserById = async (userId) => {
     const { rows } = await db.query(
         `--sql
-    SELECT users.id FROM users WHERE id = $1`,
+    SELECT users.id, users.name FROM users WHERE id = $1`,
         [userId],
     );
     return rows[0];

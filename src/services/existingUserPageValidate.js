@@ -4,7 +4,7 @@ import verboseLog from "../utils/verboseLog.js";
 const existingUserPageValidate = async (userId) => {
     try {
         const result = await userPageRepository.getUserById(userId);
-        if (result) return true;
+        if (result) return result;
         return false;
     } catch (err) {
         verboseLog(err);
