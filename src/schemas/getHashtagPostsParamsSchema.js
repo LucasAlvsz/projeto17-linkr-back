@@ -1,7 +1,7 @@
-import Joi from "joi";
+import joi from "joi";
 
-const getHashtagPostsParamsSchema = Joi.object({
-    hashtag: Joi.string().required(),
+const getHashtagPostsParamsSchema = joi.object({
+    hashtag: joi.string().required(),
 });
 
 export default getHashtagPostsParamsSchema;
