@@ -24,3 +24,14 @@ export const getUserPageData = async (req, res) => {
         res.sendStatus(500);
     }
 };
+
+export const getUsersSearchBar = async (req, res) => {
+    const { search } = req.query;
+    try {
+        const users = await userPageRepository.getListOfUsersSearchBar(search);
+        res.send(users);
+    } catch (err) {
+        verboseLog(err);
+        res.sendStatus(500);
+    }
+};
