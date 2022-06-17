@@ -14,13 +14,6 @@ const joinUrlMetadataWithPostData = async (posts) => {
             }),
         );
         return formattedPosts;
-
-        // const postUrlMetadata = [];
-        // for (const post of posts) {
-        //     const urlMetadata = await getMetadataUrl(post.link);
-        //     const
-        // }
-        // return postUrlMetadata;
     } catch (err) {
         verboseLog(err);
         return -1;
