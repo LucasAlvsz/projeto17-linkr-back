@@ -27,9 +27,21 @@ const getUserById = async (userId) => {
     return rows[0];
 };
 
+const getListOfUsersSearchBar = async (search) => {
+    const { rows } = await db.query(
+        `--sql
+        SELECT users.id, users.username, users."pictureUrl" AS userpic 
+        FROM users
+        WHERE username ILIKE $1`,
+        [`${search}%`],
+    );
+    return rows;
+};
+
 const userPageRepository = {
     getUserPostsById,
     getUserById,
+    getListOfUsersSearchBar,
 };
 
 export default userPageRepository;
