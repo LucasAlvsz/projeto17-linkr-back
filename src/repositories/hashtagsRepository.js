@@ -9,6 +9,7 @@ const getTrending = async () => {
         SELECT hashtags.* FROM hashtags
             LEFT JOIN "postHashtag" ON "postHashtag"."hashtagId" = hashtags.id
         GROUP BY hashtags.id
+        HAVING COUNT("postHashtag"."hashtagId") > 0
         ORDER BY COUNT("postHashtag"."hashtagId") DESC 
         LIMIT 10
     `);
@@ -17,11 +18,12 @@ const getTrending = async () => {
 const getHashtagPosts = async (hashtag) => {
     return await db.query(
         `--sql
-        SELECT posts.* FROM "postHashtag"
+        SELECT posts.*, users.username, users."pictureUrl" FROM "postHashtag"
             JOIN hashtags on hashtags.id = "postHashtag"."hashtagId"
             JOIN posts ON posts.id = "postHashtag"."postId"
+            JOIN users ON users.id = posts."userId"
         WHERE hashtags.name ~* $1
-        GROUP BY posts.id
+        GROUP BY posts.id, username, users."pictureUrl" 
         `,
         [hashtag],
     );
