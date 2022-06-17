@@ -18,7 +18,7 @@ const getTrending = async () => {
 const getHashtagPosts = async (hashtag) => {
     return await db.query(
         `--sql
-        SELECT posts.*, users.username, users."pictureUrl" FROM "postHashtag"
+        SELECT posts.*, users.username, users."pictureUrl" AS userPic FROM "postHashtag"
             JOIN hashtags on hashtags.id = "postHashtag"."hashtagId"
             JOIN posts ON posts.id = "postHashtag"."postId"
             JOIN users ON users.id = posts."userId"
