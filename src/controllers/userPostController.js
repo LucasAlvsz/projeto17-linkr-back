@@ -3,7 +3,7 @@ import verboseLog from "../utils/verboseLog.js";
 import JWTVerify from "../services/JWTVerify.js";
 export const PostUser = async (req, res) => {
     const { authorization } = req.headers;
-    if (!authorization) return res.status(401).send("Token nao encontrado");
+    if (!authorization) return res.status(401).send("token not found");
     const token = authorization.replace("Bearer", "").trim();
     const dataUser = JWTVerify(token);
     // tem que colocar o service que pega as #
