@@ -1,15 +1,17 @@
 import userPostRepository from "../repositories/userPostRepository.js";
 import verboseLog from "../utils/verboseLog.js";
 import JWTVerify from "../services/JWTVerify.js";
+import { findOrCreateHashtag } from "../services/findOrCreateHashtag.js";
 export const PostUser = async (req, res) => {
-    const { authorization } = req.headers;
-    if (!authorization) return res.status(401).send("token not found");
-    const token = authorization.replace("Bearer", "").trim();
-    const dataUser = JWTVerify(token);
+    // const { authorization } = req.headers;
+    // if (!authorization) return res.status(401).send("token not found");
+    // const token = authorization.replace("Bearer", "").trim();
+    // const dataUser = JWTVerify(token);
     // tem que colocar o service que pega as #
     let userId = 5;
     const data = { ...req.body, userId };
     try {
+        findOrCreateHashtag(data);
         const makePost = userPostRepository.insertPost(data);
         res.status(200).send(makePost);
     } catch (e) {

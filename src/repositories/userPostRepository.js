@@ -9,7 +9,6 @@ const insertPost = async (data) => {
         [data.userId, data.url, data.article],
     );
 };
-
 const userPostRepository = {
     insertPost,
 };
