@@ -35,7 +35,7 @@ const getHashtagPosts = async (hashtag) => {
 const insertManyHashtags = async (names) => {
     return (
         await db.query(
-            `INSERT INTO hashtags (name) VALUES ${names} RETURNING id`,
+            `INSERT INTO hashtags (name) VALUES ${names}`, 
         )
     ).rows;
 };
