@@ -11,14 +11,14 @@ datasource db {
 }
 
 model users {
-  id       Int        @id @default(autoincrement())
-  username     String
-  email    String     @unique
-  password String
+  id         Int        @id @default(autoincrement())
+  username   String
+  email      String     @unique
+  password   String
   pictureUrl String
-  sessions sessions[]
-  posts    posts[]
-  likes    likes[]
+  sessions   sessions[]
+  posts      posts[]
+  likes      likes[]
 }
 
 model sessions {
@@ -36,8 +36,8 @@ model posts {
   article   String
   createdAt DateTime @default(now())
 
-  user          users           @relation(fields: [userId], references: [id])
-  likes         likes[]
+  user        users         @relation(fields: [userId], references: [id])
+  likes       likes[]
   postHashtag postHashtag[]
 }
 
@@ -52,16 +52,16 @@ model likes {
 }
 
 model hashtags {
-  id            Int             @id @default(autoincrement())
-  name          String
+  id          Int           @id @default(autoincrement())
+  name        String
   postHashtag postHashtag[]
 }
 
 model postHashtag {
-  id         Int @id @default(autoincrement())
-  postId     Int
+  id        Int @id @default(autoincrement())
+  postId    Int
   hashtagId Int
 
   hashtags hashtags @relation(fields: [hashtagId], references: [id])
-  post     posts     @relation(fields: [postId], references: [id])
+  post     posts    @relation(fields: [postId], references: [id])
 }

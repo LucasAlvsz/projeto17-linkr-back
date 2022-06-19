@@ -1,16 +1,20 @@
 import userPostRepository from "../repositories/userPostRepository.js";
 import verboseLog from "../utils/verboseLog.js";
-
-export const postUser = async (req, res) => {
-    // const { authorization } = req.headers;
-    // if (!authorization) return res.status(401).send("Token nao encontrado");
-    // const token = authorization.replace("Bearer", "").trim();
-    // tem que colocar o service que pega as #
-    let userId = 5; // will get caught by jwt
+import findOrCreateHashtag from "../services/findOrCreateHashtag.js";
+import hashtagsRepository from "../repositories/hashtagsRepository.js";
+export const PostUser = async (req, res) => {
+    // const infoUser = res.locals.userData;
+    let userId = 5;
     const data = { ...req.body, userId };
     try {
-        const makePost = userPostRepository.insertPost(data);
-        res.status(200).send(makePost);
+        const resultMakePost = (await userPostRepository.insertPost(data)).rows;
+        const hashtagsId = await findOrCreateHashtag(data);
+        if (hashtagsId === -1) return res.sendStatus(500);
+        hashtagsRepository.insertManyPostHashtags(
+            resultMakePost[0],
+            hashtagsId,
+        );
+        res.sendStatus(201);
     } catch (e) {
         verboseLog(e);
         res.sendStatus(500);
