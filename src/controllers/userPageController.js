@@ -10,13 +10,8 @@ export const getUserPageData = async (req, res) => {
         const formattedPosts = await joinUrlMetadataWithPostData(result.rows);
 
         res.send({
-            user: [
-                {
-                    username: user.username,
-                    userid: user.id,
-                    userpic: user.userpic,
-                },
-            ],
+            username: user.username,
+            userpic: user.userpic,
             posts: formattedPosts,
         });
     } catch (err) {
@@ -27,6 +22,9 @@ export const getUserPageData = async (req, res) => {
 
 export const getUsersSearchBar = async (req, res) => {
     const { search } = req.query;
+    if (!search) {
+        return res.send([]);
+    }
     try {
         const users = await userPageRepository.getListOfUsersSearchBar(search);
         res.send(users);
