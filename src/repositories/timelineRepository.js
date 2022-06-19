@@ -13,6 +13,7 @@ const CatchingPost = async () => {
     FROM posts
     JOIN users ON posts."userId" = users.id
     ORDER BY id DESC
+    LIMIT 20
     `);
 };
 
