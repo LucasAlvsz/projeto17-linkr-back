@@ -4,7 +4,7 @@ import findOrCreateHashtag from "../services/findOrCreateHashtag.js";
 import hashtagsRepository from "../repositories/hashtagsRepository.js";
 export const PostUser = async (req, res) => {
     // const infoUser = res.locals.userData;
-    let userId = 5;
+    let userId = 2;
     const data = { ...req.body, userId };
     try {
         const resultMakePost = (await userPostRepository.insertPost(data)).rows;
