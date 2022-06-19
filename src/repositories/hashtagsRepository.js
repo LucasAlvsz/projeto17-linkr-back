@@ -1,4 +1,9 @@
 import db from "../db/index.js";
+import formatPostHashtagQuery from "../utils/formatPostHashtagQuery.js";
+
+const getAllHashtag = async () => {
+    return await db.query("SELECT * FROM hashtags");
+};
 
 const getHashtagByName = (name) => {
     return db.query("SELECT * FROM hashtags WHERE name ~* $1", [name]);
@@ -28,11 +33,25 @@ const getHashtagPosts = async (hashtag) => {
         [hashtag],
     );
 };
-
+const insertManyHashtags = async (names) => {
+    return (await db.query(`INSERT INTO hashtags (name) VALUES ${names}`)).rows;
+};
+const insertManyPostHashtags = async (postId, hashtagsIds) => {
+    const buildedQuery = formatPostHashtagQuery(postId, hashtagsIds);
+    await db.query(
+        `--sql
+        INSERT INTO "postHashtag" ("postId", "hashtagId") 
+        VALUES ${buildedQuery}
+        `,
+    );
+};
 const hashtagsRepository = {
     getHashtagByName,
     getTrending,
     getHashtagPosts,
+    getAllHashtag,
+    insertManyHashtags,
+    insertManyPostHashtags,
 };
 
 export default hashtagsRepository;
