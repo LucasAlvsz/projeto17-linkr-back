@@ -1,6 +1,10 @@
 import { Router } from "express";
 
-import { PostUser, deletePost } from "../controllers/userPostController.js";
+import {
+    PostUser,
+    deletePost,
+    editPost,
+} from "../controllers/userPostController.js";
 
 import schemaValidateMiddleware from "../middlewares/schemaValidateMiddleware.js";
 import bearerTokenValidateMiddleware from "../middlewares/bearerTokenValidateMiddleware.js";
@@ -11,5 +15,6 @@ const userPost = Router();
 userPost.use(bearerTokenValidateMiddleware);
 userPost.post("/post", schemaValidateMiddleware(postSchema), PostUser);
 userPost.delete("/post/:postId", deletePost);
+userPost.put("/post/:postId", editPost);
 
 export default userPost;

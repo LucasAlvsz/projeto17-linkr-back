@@ -21,8 +21,20 @@ const deletePost = async (userId, postId) => {
     );
 };
 
+const updatePost = async ({ url, article, postId, userId }) => {
+    return await db.query(
+        `--sql
+        UPDATE posts
+        SET link = $1, article = $2
+        WHERE id = $3 AND "userId" = $4
+    `,
+        [url, article, postId, userId],
+    );
+};
+
 const userPostRepository = {
     insertPost,
     deletePost,
+    updatePost,
 };
 export default userPostRepository;
