@@ -23,10 +23,11 @@ const getTrending = async () => {
 const getHashtagPosts = async (hashtag) => {
     return await db.query(
         `--sql
-        SELECT posts.*, users.username, users."pictureUrl" AS userPic FROM "postHashtag"
-            JOIN hashtags on hashtags.id = "postHashtag"."hashtagId"
-            JOIN posts ON posts.id = "postHashtag"."postId"
-            JOIN users ON users.id = posts."userId"
+        SELECT posts.*, users.username, users."pictureUrl" AS userPic, COUNT(likes.id) AS "likes" FROM "postHashtag"
+        JOIN hashtags on hashtags.id = "postHashtag"."hashtagId"
+        JOIN posts ON posts.id = "postHashtag"."postId"
+        JOIN users ON users.id = posts."userId"
+        LEFT JOIN likes ON likes."postId" = posts.id
         WHERE hashtags.name ~* $1
         GROUP BY posts.id, username, users."pictureUrl" 
         `,

@@ -1,6 +1,7 @@
 import userPostRepository from "../repositories/userPostRepository.js";
 import verboseLog from "../utils/verboseLog.js";
 import findOrCreateHashtag from "../services/findOrCreateHashtag.js";
+import { deleteLikeQuery } from "../repositories//likeRepository.js";
 import hashtagsRepository from "../repositories/hashtagsRepository.js";
 
 export const PostUser = async (req, res) => {
@@ -53,6 +54,7 @@ export const deletePost = async (req, res) => {
             postId,
             userId,
         );
+        await deleteLikeQuery(postId);
         const result = await userPostRepository.deletePost(userId, postId);
         if (result.rowCount === 0) return res.sendStatus(404);
         await userPostRepository.deletePost(postId);
