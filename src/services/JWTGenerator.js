@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-export const JWTGenerator = data => {
+const JWTGenerator = data => {
     return jwt.sign(data, process.env.JWT_SECRET);
 };
 
