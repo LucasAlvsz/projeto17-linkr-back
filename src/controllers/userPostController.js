@@ -49,10 +49,11 @@ export const deletePost = async (req, res) => {
     const userId = res.locals.userData;
     const postId = req.params.postId;
     try {
-        const result = await hashtagsRepository.deleteHashtagsByPostIdAndUserId(
+        await hashtagsRepository.deleteHashtagsByPostIdAndUserId(
             postId,
             userId,
         );
+        const result = await userPostRepository.deletePost(userId, postId);
         if (result.rowCount === 0) return res.sendStatus(404);
         await userPostRepository.deletePost(postId);
         res.sendStatus(200);
