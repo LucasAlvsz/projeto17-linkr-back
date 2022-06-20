@@ -8,10 +8,10 @@ import postSchema from "../schemas/userPostSchema.js";
 
 const userPost = Router();
 
+userPost.use(bearerTokenValidateMiddleware);
 userPost.post(
     "/post",
     schemaValidateMiddleware(postSchema),
-    // bearerTokenValidateMiddleware,
     PostUser,
 );
 

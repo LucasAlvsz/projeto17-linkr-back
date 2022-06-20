@@ -13,13 +13,13 @@ authRouter.post(
     "/sign-up",
     schemaValidateMiddleware(signUpSchema),
     emailConflictMiddleware,
-    postSignUp
+    postSignUp,
 );
 authRouter.post(
     "/sign-in",
     schemaValidateMiddleware(signInSchema),
     authMiddleware,
-    postSignIn
+    postSignIn,
 );
 
 export default authRouter;
