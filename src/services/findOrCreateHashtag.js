@@ -4,7 +4,13 @@ import verboseLog from "../utils/verboseLog.js";
 const findOrCreateHashtag = async (data) => {
     try {
         const splittedWords = data.article.split(" ");
-        const hashtags = splittedWords.filter((word) => word.startsWith("#"));
+        const hashtagsPost = splittedWords.filter((word) =>
+            word.startsWith("#"),
+        );
+        if (!hashtagsPost.length) return 0;
+        const hashtags = hashtagsPost.filter(
+            (hashtag, i) => hashtagsPost.indexOf(hashtag) === i,
+        );
         const hashtagWithoutHash = hashtags.map((hashtag) =>
             hashtag.replace("#", ""),
         );
