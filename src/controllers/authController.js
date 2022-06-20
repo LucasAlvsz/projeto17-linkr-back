@@ -6,7 +6,6 @@ import verboseLog from "../utils/verboseLog.js";
 export const postSignUp = async (req, res) => {
     try {
         const signUpData = req.body;
-
         signUpData.password = encryptPassword(req.body.password);
         await authRepository.insertNewUser(signUpData);
 
@@ -23,7 +22,7 @@ export const postSignIn = (req, res) => {
         const { id, pictureUrl } = user;
 
         const token = JWTGenerator(id);
-        res.send({ token, id, pictureUrl });
+        res.send({ token, userId: id, pictureUrl });
     } catch (error) {
         verboseLog(error);
         res.sendStatus(500);
