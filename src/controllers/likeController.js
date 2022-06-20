@@ -6,13 +6,16 @@ import verboseLog from "../utils/verboseLog.js";
 
 export const likeMessage = async (req, res) => {
     const { postId } = req.body;
-    const like = req.hasLiked;
+    const userId = res.locals.userData;
+    const hasLiked = req.hasLiked;
     try {
-        if (like) {
-            unlikeMessageQuery(1, postId);
+        if (hasLiked) {
+            unlikeMessageQuery(userId, postId);
+            console.log("unliked");
             res.sendStatus(200);
         } else {
-            likeMessageQuery(1, postId);
+            likeMessageQuery(userId, postId);
+            console.log("liked");
             res.sendStatus(200);
         }
     } catch (error) {
@@ -20,5 +23,3 @@ export const likeMessage = async (req, res) => {
         res.sendStatus(500);
     }
 };
-
-export const unlikeMessage = async (req, res) => {};
