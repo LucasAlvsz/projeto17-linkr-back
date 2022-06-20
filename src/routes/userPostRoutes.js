@@ -11,7 +11,7 @@ const userPost = Router();
 userPost.post(
     "/post",
     schemaValidateMiddleware(postSchema),
-    bearerTokenValidateMiddleware,
+    // bearerTokenValidateMiddleware,
     PostUser,
 );
 

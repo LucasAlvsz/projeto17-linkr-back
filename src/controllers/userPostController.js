@@ -10,6 +10,7 @@ export const PostUser = async (req, res) => {
         const resultMakePost = (await userPostRepository.insertPost(data)).rows;
         const hashtagsId = await findOrCreateHashtag(data);
         if (hashtagsId === -1) return res.sendStatus(500);
+        if (hashtagsId === 0) return res.sendStatus(201);
         hashtagsRepository.insertManyPostHashtags(
             resultMakePost[0],
             hashtagsId,

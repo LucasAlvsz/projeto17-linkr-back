@@ -5,6 +5,7 @@ const findOrCreateHashtag = async (data) => {
     try {
         const splittedWords = data.article.split(" ");
         const hashtags = splittedWords.filter((word) => word.startsWith("#"));
+        if (!hashtags.length) return 0;
         const hashtagWithoutHash = hashtags.map((hashtag) =>
             hashtag.replace("#", ""),
         );
