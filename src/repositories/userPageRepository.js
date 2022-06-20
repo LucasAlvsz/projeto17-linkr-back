@@ -3,11 +3,19 @@ import db from "../db/index.js";
 const getUserPostsById = async (userId) => {
     const { rows } = await db.query(
         `--sql
-    SELECT posts.link, 
-    users.name as "userName"
-    FROM posts
-    JOIN users ON posts."userId" = users.id
-    WHERE users.id = $1
+        SELECT posts.id,
+        users.id AS "userId", 
+        posts.link,
+        posts.article,
+        posts."createdAt",
+        users.username, 
+        users."pictureUrl" AS "userpic",
+        COUNT(likes."postId") AS "likes"
+        FROM posts
+        LEFT JOIN likes ON likes."postId" = posts.id
+        JOIN users ON posts."userId" = users.id
+        WHERE users.id = $1
+        GROUP BY posts.id, users.id
     `,
         [userId],
     );
