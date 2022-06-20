@@ -7,7 +7,7 @@ export const CatchingPosts = async (req, res) => {
         const results = await timelineRepository.CatchingPost();
         const formattedPosts = await joinUrlMetadataWithPostData(results.rows);
 
-        res.status(201).send(formattedPosts);
+        res.status(200).send(formattedPosts);
     } catch (err) {
         verboseLog(err);
         res.sendStatus(500);

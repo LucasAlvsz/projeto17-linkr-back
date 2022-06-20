@@ -52,6 +52,18 @@ const insertManyPostHashtags = async (postId, hashtagsIds) => {
         `,
     );
 };
+
+const deleteHashtagsByPostIdAndUserId = async (postId, userId) => {
+    return await db.query(
+        `--sql
+            DELETE FROM "postHashtag" 
+            USING posts
+            WHERE "postId" = $1 AND "userId" = $2
+    `,
+        [postId, userId],
+    );
+};
+
 const hashtagsRepository = {
     getHashtagByName,
     getTrending,
@@ -59,6 +71,7 @@ const hashtagsRepository = {
     getAllHashtag,
     insertManyHashtags,
     insertManyPostHashtags,
+    deleteHashtagsByPostIdAndUserId,
 };
 
 export default hashtagsRepository;
