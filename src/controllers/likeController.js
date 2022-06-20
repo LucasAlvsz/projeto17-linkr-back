@@ -1,4 +1,5 @@
 import {
+    getLikesQuery,
     likeMessageQuery,
     unlikeMessageQuery,
 } from "../repositories/likeRepository.js";
@@ -11,13 +12,21 @@ export const likeMessage = async (req, res) => {
     try {
         if (hasLiked) {
             unlikeMessageQuery(userId, postId);
-            console.log("unliked");
-            res.sendStatus(200);
+            res.sendStatus(202);
         } else {
             likeMessageQuery(userId, postId);
-            console.log("liked");
-            res.sendStatus(200);
+            res.sendStatus(202);
         }
+    } catch (error) {
+        verboseLog(error);
+        res.sendStatus(500);
+    }
+};
+
+export const getLikes = async (req, res) => {
+    try {
+        const likes = (await getLikesQuery()).rows;
+        res.status(200).send(likes);
     } catch (error) {
         verboseLog(error);
         res.sendStatus(500);
