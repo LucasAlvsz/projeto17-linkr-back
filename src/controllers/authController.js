@@ -23,7 +23,7 @@ export const postSignIn = (req, res) => {
         const { id, pictureUrl } = user;
 
         const token = JWTGenerator(id);
-        res.send({token, pictureUrl});
+        res.send({ token, id, pictureUrl });
     } catch (error) {
         verboseLog(error);
         res.sendStatus(500);
