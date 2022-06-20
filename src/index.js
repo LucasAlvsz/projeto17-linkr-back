@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(routes);
 
 app.get("/", async (req, res) => {
-    res.send("Hello World!");
+    res.send("Hello World!!");
 });
 
 app.listen(process.env.PORT || 5000, () => {
