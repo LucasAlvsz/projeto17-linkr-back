@@ -1,7 +1,7 @@
 import db from "../db/index.js";
 
 const getUserPostsById = async (userId) => {
-    const { rows } = await db.query(
+    return await db.query(
         `--sql
         SELECT posts.id,
         users.id AS "userId", 
@@ -19,21 +19,32 @@ const getUserPostsById = async (userId) => {
     `,
         [userId],
     );
-    return rows;
 };
 
 const getUserById = async (userId) => {
     const { rows } = await db.query(
         `--sql
-    SELECT users.id, users.name FROM users WHERE id = $1`,
+    SELECT users.id, users.username, users."pictureUrl" AS "userpic" FROM users WHERE id = $1`,
         [userId],
     );
     return rows[0];
 };
 
+const getListOfUsersSearchBar = async (search) => {
+    const { rows } = await db.query(
+        `--sql
+        SELECT users.id, users.username, users."pictureUrl" AS userpic 
+        FROM users
+        WHERE username ILIKE $1`,
+        [`${search}%`],
+    );
+    return rows;
+};
+
 const userPageRepository = {
     getUserPostsById,
     getUserById,
+    getListOfUsersSearchBar,
 };
 
 export default userPageRepository;
