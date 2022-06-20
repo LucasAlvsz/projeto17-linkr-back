@@ -15,6 +15,6 @@ const userPost = Router();
 userPost.use(bearerTokenValidateMiddleware);
 userPost.post("/post", schemaValidateMiddleware(postSchema), PostUser);
 userPost.delete("/post/:postId", deletePost);
-userPost.put("/post/:postId", editPost);
+userPost.put("/post/:postId", schemaValidateMiddleware(postSchema), editPost);
 
 export default userPost;
