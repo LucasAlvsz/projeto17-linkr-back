@@ -2,7 +2,7 @@ import db from "../db/index.js";
 
 const insertPost = async (data) => {
     return await db.query(
-        `
+        `--sql
         INSERT INTO posts ("userId",link,article)
         VALUES ($1,$2,$3)
         RETURNING id;

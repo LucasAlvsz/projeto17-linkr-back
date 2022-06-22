@@ -24,9 +24,20 @@ export const getCommentsByPostId = async (postId) => {
     );
 };
 
+export const deleteCommentsByPostIdAndUserId = async (postId, userId) => {
+    return await db.query(
+        `--sql
+        DELETE FROM comments
+        WHERE "postId" = $1 AND "userId" = $2
+    `,
+        [postId, userId],
+    );
+};
+
 const commentsRepository = {
     insertComment,
     getCommentsByPostId,
+    deleteCommentsByPostIdAndUserId,
 };
 
 export default commentsRepository;
