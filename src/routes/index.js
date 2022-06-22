@@ -6,6 +6,7 @@ import userPost from "./userPostRoutes.js";
 import userPageRouter from "./userPageRoutes.js";
 import likeRouter from "./likeRouter.js";
 import timelineRouter from "./timelineRouter.js";
+import commentsRouter from "./commentsRouter.js";
 
 const router = Router();
 
@@ -15,5 +16,6 @@ router.use(userPost);
 router.use(userPageRouter);
 router.use(likeRouter);
 router.use(timelineRouter);
+router.use(commentsRouter);
 
 export default router;

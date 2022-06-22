@@ -1,13 +1,15 @@
 import verboseLog from "../utils/verboseLog.js";
 import userPageRepository from "../repositories/userPageRepository.js";
-import joinUrlMetadataWithPostData from "../services/joinUrlMetadataWithPostData.js";
+import joinUrlMetadataAndCommentsWithPostData from "../services/joinUrlMetadataAndCommentsWithPostData.js";
 
 export const getUserPageData = async (req, res) => {
     const { id } = req.params;
     try {
         const user = res.locals.user;
         const result = await userPageRepository.getUserPostsById(id);
-        const formattedPosts = await joinUrlMetadataWithPostData(result.rows);
+        const formattedPosts = await joinUrlMetadataAndCommentsWithPostData(
+            result.rows,
+        );
 
         res.send({
             username: user.username,

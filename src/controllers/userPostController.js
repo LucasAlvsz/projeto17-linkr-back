@@ -3,6 +3,7 @@ import verboseLog from "../utils/verboseLog.js";
 import findOrCreateHashtag from "../services/findOrCreateHashtag.js";
 import { deleteLikeQuery } from "../repositories//likeRepository.js";
 import hashtagsRepository from "../repositories/hashtagsRepository.js";
+import commentsRepository from "../repositories/commentsRepository.js";
 
 export const PostUser = async (req, res) => {
     const userId = res.locals.userData;
@@ -55,6 +56,12 @@ export const deletePost = async (req, res) => {
             userId,
         );
         await deleteLikeQuery(postId);
+        const deletedComments =
+            await commentsRepository.deleteCommentsByPostIdAndUserId(
+                postId,
+                userId,
+            );
+        if (!deletedComments.rowCount) return res.sendStatus(400);
         const result = await userPostRepository.deletePost(userId, postId);
         if (result.rowCount === 0) return res.sendStatus(404);
         await userPostRepository.deletePost(postId);

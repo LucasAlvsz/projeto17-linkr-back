@@ -1,11 +1,12 @@
 import verboseLog from "../utils/verboseLog.js";
 import timelineRepository from "../repositories/timelineRepository.js";
-import joinUrlMetadataWithPostData from "../services/joinUrlMetadataWithPostData.js";
-export const CatchingPosts = async (req, res) => {
-    // const user = res.locals.user;
+import joinUrlMetadataAndCommentsWithPostData from "../services/joinUrlMetadataAndCommentsWithPostData.js";
+export const catchingPosts = async (req, res) => {
     try {
-        const results = await timelineRepository.CatchingPost();
-        const formattedPosts = await joinUrlMetadataWithPostData(results.rows);
+        const results = await timelineRepository.catchingPost();
+        const formattedPosts = await joinUrlMetadataAndCommentsWithPostData(
+            results.rows,
+        );
 
         res.status(200).send(formattedPosts);
     } catch (err) {
