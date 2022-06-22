@@ -1,8 +1,7 @@
 import db from "../db/index.js";
 
-const CatchingPost = async () => {
-    return await db.query(`
-        --sql
+const catchingPost = async () => {
+    return await db.query(`--sql
         SELECT posts.id,
         users.id AS "userId", 
         posts.link,
@@ -21,7 +20,7 @@ const CatchingPost = async () => {
 };
 
 const timelineRepository = {
-    CatchingPost,
+    catchingPost,
 };
 
 export default timelineRepository;
