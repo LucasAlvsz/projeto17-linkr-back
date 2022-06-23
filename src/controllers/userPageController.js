@@ -24,12 +24,31 @@ export const getUserPageData = async (req, res) => {
 
 export const getUsersSearchBar = async (req, res) => {
     const { search } = req.query;
+    const userId = parseInt(res.locals.userData);
     if (!search) {
         return res.send([]);
     }
     try {
         const users = await userPageRepository.getListOfUsersSearchBar(search);
-        res.send(users);
+        const followers = await userPageRepository.getListOfFollowersSearchBar(
+            search,
+            userId,
+        );
+        followers.map((follower) => {
+            follower.isFollower = true;
+        });
+
+        const usersWithoutFollowers = users.filter((user) => {
+            return !followers.some((follower) => follower.id === user.id);
+        });
+
+        usersWithoutFollowers.map((user) => {
+            user.isFollower = false;
+        });
+
+        const formattedUsers = followers.concat(usersWithoutFollowers);
+
+        res.send(formattedUsers);
     } catch (err) {
         verboseLog(err);
         res.sendStatus(500);
