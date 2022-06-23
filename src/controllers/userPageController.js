@@ -54,3 +54,32 @@ export const getUsersSearchBar = async (req, res) => {
         res.sendStatus(500);
     }
 };
+
+export const getButtonFollowOrUnfollow = async (req, res) => {
+    const { id: userIdPage } = req.params;
+    const userIdStorage = res.locals.userData;
+    try {
+        const usersFollowing = await userPageRepository.getListOfUsersFollowing(
+            userIdStorage,
+            userIdPage,
+        );
+        res.status(200).send(usersFollowing[0] ? true : false);
+    } catch (err) {
+        verboseLog(err);
+        res.sendStatus(500);
+    }
+};
+
+export const postFollowOrUnfollow = async (req, res) => {
+    const { id: userIdPage } = req.params;
+    const userIdStorage = res.locals.userData;
+    const { Following } = req.body;
+
+    if (Following) {
+        await userPageRepository.deleteFollow(userIdStorage, userIdPage);
+        res.status(200).send(false);
+    } else {
+        await userPageRepository.insertFollow(userIdStorage, userIdPage);
+        res.status(200).send(true);
+    }
+};
