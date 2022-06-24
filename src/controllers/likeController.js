@@ -9,6 +9,7 @@ export const likePost = async (req, res) => {
         if (hasLiked) likeRepository.unlikePost(userId, postId);
         else likeRepository.likePost(userId, postId);
         res.sendStatus(202);
+
     } catch (error) {
         verboseLog(error);
         res.sendStatus(500);

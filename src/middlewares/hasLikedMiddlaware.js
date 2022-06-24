@@ -9,6 +9,7 @@ export const hasLikedMiddleware = async (req, res, next) => {
     try {
         const like = (await likeRepository.hasLiked(userId, postId)).rows[0];
         res.locals.hasLiked = like;
+
     } catch (error) {
         verboseLog(error);
         res.sendStatus(500);

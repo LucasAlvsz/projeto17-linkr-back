@@ -9,12 +9,14 @@ export const hasLiked = async (userId, postId) => {
 };
 
 export const likePost = async (userId, postId) => {
+
     return await db.query(
         `--sql
         INSERT INTO likes ("userId", "postId") VALUES ($1, $2)`,
         [userId, postId],
     );
 };
+
 
 export const unlikePost = async (userId, postId) => {
     return await db.query(
@@ -48,6 +50,7 @@ export const getCountLikesByPostId = async (postId) => {
 };
 
 export const deleteLikesByPostId = async (postId) => {
+
     return await db.query(
         `--sql
         DELETE FROM likes WHERE "postId" = $1`,
