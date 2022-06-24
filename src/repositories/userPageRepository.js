@@ -9,11 +9,13 @@ const getUserPostsById = async (userId) => {
         posts.article,
         posts."createdAt",
         users.username, 
-        users."pictureUrl" AS "userpic",
-        COUNT(likes."postId") AS "likes"
+        users."pictureUrl" AS "userPic",
+        COUNT(likes."postId") AS "likes",
+        COUNT(reposts.*) AS "repostsCount"
         FROM posts
         LEFT JOIN likes ON likes."postId" = posts.id
         JOIN users ON posts."userId" = users.id
+        LEFT JOIN "reposts" ON "reposts"."postId" = posts.id
         WHERE users.id = $1
         GROUP BY posts.id, users.id
     `,
