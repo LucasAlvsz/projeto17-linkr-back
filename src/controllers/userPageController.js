@@ -1,5 +1,6 @@
 import verboseLog from "../utils/verboseLog.js";
 import userPageRepository from "../repositories/userPageRepository.js";
+import followersRepository from "../repositories/followersRepository.js";
 import joinUrlMetadataAndCommentsWithPostData from "../services/joinUrlMetadataAndCommentsWithPostData.js";
 
 export const getUserPageData = async (req, res) => {
@@ -30,7 +31,7 @@ export const getUsersSearchBar = async (req, res) => {
     }
     try {
         const users = await userPageRepository.getListOfUsersSearchBar(search);
-        const followers = await userPageRepository.getListOfFollowersSearchBar(
+        const followers = await followersRepository.getListOfFollowersSearchBar(
             search,
             userId,
         );
@@ -59,10 +60,11 @@ export const getButtonFollowOrUnfollow = async (req, res) => {
     const { id: userIdPage } = req.params;
     const userIdStorage = res.locals.userData;
     try {
-        const usersFollowing = await userPageRepository.getListOfUsersFollowing(
-            userIdStorage,
-            userIdPage,
-        );
+        const usersFollowing =
+            await followersRepository.getListOfUsersFollowing(
+                userIdStorage,
+                userIdPage,
+            );
         res.status(200).send(usersFollowing[0] ? true : false);
     } catch (err) {
         verboseLog(err);
@@ -76,10 +78,10 @@ export const postFollowOrUnfollow = async (req, res) => {
     const { Following } = req.body;
 
     if (Following) {
-        await userPageRepository.deleteFollow(userIdStorage, userIdPage);
+        await followersRepository.deleteFollow(userIdStorage, userIdPage);
         res.status(200).send(false);
     } else {
-        await userPageRepository.insertFollow(userIdStorage, userIdPage);
+        await followersRepository.insertFollow(userIdStorage, userIdPage);
         res.status(200).send(true);
     }
 };
