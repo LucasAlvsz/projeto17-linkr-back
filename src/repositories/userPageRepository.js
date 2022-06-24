@@ -41,23 +41,10 @@ const getListOfUsersSearchBar = async (search) => {
     return rows;
 };
 
-const getListOfFollowersSearchBar = async (search, userId) => {
-    const { rows } = await db.query(
-        `--sql
-        SELECT u1.username, u1.id, u1."pictureUrl" AS userpic FROM followers
-        JOIN users u2 ON "userId" = u2.id
-        JOIN users u1 ON "followerId" = u1.id
-        WHERE u2.id = ${userId} AND u1.username ILIKE $1`,
-        [`${search}%`],
-    );
-    return rows;
-};
-
 const userPageRepository = {
     getUserPostsById,
     getUserById,
     getListOfUsersSearchBar,
-    getListOfFollowersSearchBar,
 };
 
 export default userPageRepository;
