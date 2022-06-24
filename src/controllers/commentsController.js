@@ -1,9 +1,9 @@
 import commentsRepository from "../repositories/commentsRepository.js";
 
 export const insertComment = async (req, res) => {
-    const { comment, postId, userId } = req.body;
-    const userTokenId = res.locals.userData;
-    if (userTokenId != userId) return res.sendStatus(401);
+    const { comment } = req.body;
+    const { postId } = req.params;
+    const userId = res.locals.userData;
     const { rows } = await commentsRepository.insertComment(
         comment,
         postId,

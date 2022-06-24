@@ -9,7 +9,7 @@ import commentSchema from "../schemas/commentSchema.js";
 const commentsRouter = Router();
 
 commentsRouter.post(
-    "/comments",
+    "/comments/:postId",
     bearerTokenValidateMiddleware,
     schemaValidateMiddleware(commentSchema),
     insertComment,
