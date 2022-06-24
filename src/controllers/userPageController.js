@@ -9,9 +9,9 @@ export const getUserPageData = async (req, res) => {
         const user = res.locals.user;
         const result = await userPageRepository.getUserPostsById(id);
         const formattedPosts = await joinUrlMetadataAndCommentsWithPostData(
+            id,
             result.rows,
         );
-
         res.send({
             username: user.username,
             userpic: user.userpic,

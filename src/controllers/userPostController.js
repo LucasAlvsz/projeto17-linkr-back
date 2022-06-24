@@ -56,12 +56,10 @@ export const deletePost = async (req, res) => {
             userId,
         );
         await likeRepository.deleteLikesByPostId(postId);
-        const deletedComments =
-            await commentsRepository.deleteCommentsByPostIdAndUserId(
-                postId,
-                userId,
-            );
-        if (!deletedComments.rowCount) return res.sendStatus(400);
+        await commentsRepository.deleteCommentsByPostIdAndUserId(
+            postId,
+            userId,
+        );
         const result = await userPostRepository.deletePost(userId, postId);
         if (result.rowCount === 0) return res.sendStatus(404);
         await userPostRepository.deletePost(postId);
