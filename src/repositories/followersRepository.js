@@ -24,6 +24,15 @@ const getListOfUsersFollowing = async (userIdStorage, userIdPage) => {
     return rows;
 };
 
+const getListOfUsersIdFollowing = async (userIdStorage) => {
+    return await db.query(
+        `--sql
+        SELECT "userId" FROM followers
+        WHERE "followerId" = $1`,
+        [`${userIdStorage}`],
+    );
+};
+
 const deleteFollow = async (userIdStorage, userIdPage) => {
     await db.query(
         `--sql
@@ -45,6 +54,7 @@ const followersRepository = {
     getListOfUsersFollowing,
     deleteFollow,
     insertFollow,
+    getListOfUsersIdFollowing,
 };
 
 export default followersRepository;

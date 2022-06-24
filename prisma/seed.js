@@ -113,6 +113,14 @@ async function main() {
                 "https://ca.slack-edge.com/T018FQDU2KB-U027PBVF63S-c6a1a38939ab-512",
         },
     ];
+    const followers = [
+        { userId: 1, followerId: 2 },
+        { userId: 2, followerId: 3 },
+        { userId: 3, followerId: 4 },
+        { userId: 4, followerId: 5 },
+        { userId: 5, followerId: 1 },
+    ];
+
     await prisma.users.createMany({
         data: users,
     });
@@ -122,6 +130,7 @@ async function main() {
     await prisma.postHashtag.createMany({ data: postHashtag });
     await prisma.likes.createMany({ data: likes });
     await prisma.comments.createMany({ data: comments });
+    await prisma.followers.createMany({ data: followers });
 }
 
 main()
