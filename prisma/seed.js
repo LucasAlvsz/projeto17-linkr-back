@@ -79,7 +79,6 @@ async function main() {
     ];
     const users = [
         {
-            id: 1,
             username: "Gabriel Viana",
             email: "melhor@aphelios.com",
             password: "so-aceita",
@@ -87,7 +86,6 @@ async function main() {
                 "https://cdn1.dotesports.com/wp-content/uploads/sites/3/2019/11/19165044/Screenshot_2019-11-19-Universe-of-League-of-Legends.png",
         },
         {
-            id: 2,
             username: "Natan Brito",
             email: "natan@brito.com",
             password: "natan-brito",
@@ -95,14 +93,12 @@ async function main() {
                 "https://ca.slack-edge.com/T018FQDU2KB-U02SZNFB3CN-0fef8aa017d3-512",
         },
         {
-            id: 3,
             username: "Lucax da T20",
             email: "fuisolado@pelocalvin.com",
             password: "lucax-t20",
             pictureUrl: "https://i.ibb.co/kqH9t7W/cortado.png",
         },
         {
-            id: 4,
             username: "Thales Gomes",
             email: "el@bigon.com",
             password: "thales-gomes",
@@ -110,7 +106,6 @@ async function main() {
                 "https://ca.slack-edge.com/T018FQDU2KB-U02TYF27A48-6a727c2b39a7-512",
         },
         {
-            id: 5,
             username: "João Henrique",
             email: "joao@henrique.com",
             password: "joao-henrique",
