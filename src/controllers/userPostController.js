@@ -55,7 +55,7 @@ export const deletePost = async (req, res) => {
             postId,
             userId,
         );
-        await likeRepository.deleteLikeByPostId(postId);
+        await likeRepository.deleteLikesByPostId(postId);
         const deletedComments =
             await commentsRepository.deleteCommentsByPostIdAndUserId(
                 postId,

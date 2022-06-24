@@ -2,13 +2,13 @@ import db from "../db/index.js";
 
 export const hasLiked = async (userId, postId) => {
     return await db.query(
-        `
+        `--sql
         SELECT * FROM likes WHERE "userId" = $1 AND "postId" = $2`,
         [userId, postId],
     );
 };
 
-export const likeMessage = async (userId, postId) => {
+export const likePost = async (userId, postId) => {
     return await db.query(
         `--sql
         INSERT INTO likes ("userId", "postId") VALUES ($1, $2)`,
@@ -16,7 +16,7 @@ export const likeMessage = async (userId, postId) => {
     );
 };
 
-export const unlikeMessage = async (userId, postId) => {
+export const unlikePost = async (userId, postId) => {
     return await db.query(
         `--sql
     DELETE FROM likes WHERE "userId" = $1 AND "postId" = $2`,
@@ -24,14 +24,30 @@ export const unlikeMessage = async (userId, postId) => {
     );
 };
 
-export const getLikes = async () => {
-    return await db.query(`--sql 
-    SELECT likes.id, users."username", likes."userId", likes."postId" FROM likes
-    JOIN users ON users.id = likes."userId"
-    ORDER BY "postId" DESC`);
+export const getLikesByPostId = async (userId, postId) => {
+    return await db.query(
+        `--sql 
+        SELECT users."username", users.id
+        FROM likes
+            JOIN users ON users.id = likes."userId"
+        WHERE likes."postId" = $2 AND users.id != $1
+        LIMIT 2
+    `,
+        [userId, postId],
+    );
 };
 
-export const deleteLikeByPostId = async (postId) => {
+export const getCountLikesByPostId = async (postId) => {
+    return await db.query(
+        `--sql
+        SELECT COUNT(*) AS "countLikes"
+        FROM likes
+        WHERE "postId" = $1`,
+        [postId],
+    );
+};
+
+export const deleteLikesByPostId = async (postId) => {
     return await db.query(
         `--sql
         DELETE FROM likes WHERE "postId" = $1`,
@@ -41,10 +57,11 @@ export const deleteLikeByPostId = async (postId) => {
 
 const likeRepository = {
     hasLiked,
-    likeMessage,
-    unlikeMessage,
-    getLikes,
-    deleteLikeByPostId,
+    likePost,
+    unlikePost,
+    getLikesByPostId,
+    getCountLikesByPostId,
+    deleteLikesByPostId,
 };
 
 export default likeRepository;

@@ -20,6 +20,7 @@ model users {
   posts      posts[]
   likes      likes[]
   comments   comments[]
+  reposts    reposts[]
 }
 
 model sessions {
@@ -41,6 +42,7 @@ model posts {
   likes       likes[]
   postHashtag postHashtag[]
   comments    comments[]
+  reposts     reposts[]
 }
 
 model likes {
@@ -73,6 +75,17 @@ model comments {
   userId    Int
   postId    Int
   comment   String
+  createdAt DateTime @default(now())
+
+  users users @relation(fields: [userId], references: [id])
+  posts posts @relation(fields: [postId], references: [id])
+}
+
+model reposts {
+  id        Int      @id @default(autoincrement())
+  isRepost  Boolean  @default(true)
+  userId    Int
+  postId    Int
   createdAt DateTime @default(now())
 
   users users @relation(fields: [userId], references: [id])
