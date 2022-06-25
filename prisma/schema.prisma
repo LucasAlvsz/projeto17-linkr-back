@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,34 +8,38 @@ datasource db {
 }
 
 model users {
-  id         Int        @id @default(autoincrement())
-  username   String
-  email      String     @unique
-  password   String
-  pictureUrl String
-  sessions   sessions[]
-  posts      posts[]
-  likes      likes[]
+  id                                    Int         @id @default(autoincrement())
+  username                              String
+  email                                 String      @unique
+  password                              String
+  pictureUrl                            String
+  comments                              comments[]
+  followers_followers_followerIdTousers followers[] @relation("followers_followerIdTousers")
+  followers_followers_userIdTousers     followers[] @relation("followers_userIdTousers")
+  likes                                 likes[]
+  posts                                 posts[]
+  reposts                               reposts[]
+  sessions                              sessions[]
 }
 
 model sessions {
   id        Int      @id @default(autoincrement())
   userId    Int
   createdAt DateTime @default(now())
-
-  user users @relation(fields: [userId], references: [id])
+  user      users    @relation(fields: [userId], references: [id])
 }
 
 model posts {
-  id        Int      @id @default(autoincrement())
-  userId    Int
-  link      String
-  article   String
-  createdAt DateTime @default(now())
-
+  id          Int           @id @default(autoincrement())
+  userId      Int
+  link        String
+  article     String
+  createdAt   DateTime      @default(now())
   user        users         @relation(fields: [userId], references: [id])
+  comments    comments[]
   likes       likes[]
   postHashtag postHashtag[]
+  reposts     reposts[]
 }
 
 model likes {
@@ -46,9 +47,8 @@ model likes {
   userId    Int
   postId    Int
   createdAt DateTime @default(now())
-
-  users users @relation(fields: [userId], references: [id])
-  posts posts @relation(fields: [postId], references: [id])
+  posts     posts    @relation(fields: [postId], references: [id])
+  users     users    @relation(fields: [userId], references: [id])
 }
 
 model hashtags {
@@ -58,10 +58,37 @@ model hashtags {
 }
 
 model postHashtag {
-  id        Int @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   postId    Int
   hashtagId Int
+  hashtags  hashtags @relation(fields: [hashtagId], references: [id])
+  post      posts    @relation(fields: [postId], references: [id])
+}
 
-  hashtags hashtags @relation(fields: [hashtagId], references: [id])
-  post     posts    @relation(fields: [postId], references: [id])
+model comments {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  postId    Int
+  comment   String
+  createdAt DateTime @default(now())
+  posts     posts    @relation(fields: [postId], references: [id])
+  users     users    @relation(fields: [userId], references: [id])
+}
+
+model reposts {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  postId    Int
+  createdAt DateTime @default(now())
+  isRepost  Boolean  @default(true)
+  posts     posts    @relation(fields: [postId], references: [id])
+  users     users    @relation(fields: [userId], references: [id])
+}
+
+model followers {
+  id                                Int    @id @default(autoincrement())
+  userId                            Int?
+  followerId                        Int?
+  users_followers_followerIdTousers users? @relation("followers_followerIdTousers", fields: [followerId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users_followers_userIdTousers     users? @relation("followers_userIdTousers", fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }

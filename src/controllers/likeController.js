@@ -1,32 +1,15 @@
-import {
-    getLikesQuery,
-    likeMessageQuery,
-    unlikeMessageQuery,
-} from "../repositories/likeRepository.js";
+import likeRepository from "../repositories/likeRepository.js";
 import verboseLog from "../utils/verboseLog.js";
 
-export const likeMessage = async (req, res) => {
-    const { postId } = req.body;
+export const likePost = async (req, res) => {
+    const { postId } = req.params;
     const userId = res.locals.userData;
-    const hasLiked = req.hasLiked;
+    const hasLiked = res.locals.hasLiked;
     try {
-        if (hasLiked) {
-            unlikeMessageQuery(userId, postId);
-            res.sendStatus(202);
-        } else {
-            likeMessageQuery(userId, postId);
-            res.sendStatus(202);
-        }
-    } catch (error) {
-        verboseLog(error);
-        res.sendStatus(500);
-    }
-};
+        if (hasLiked) likeRepository.unlikePost(userId, postId);
+        else likeRepository.likePost(userId, postId);
+        res.sendStatus(202);
 
-export const getLikes = async (req, res) => {
-    try {
-        const likes = (await getLikesQuery()).rows;
-        res.status(200).send(likes);
     } catch (error) {
         verboseLog(error);
         res.sendStatus(500);
