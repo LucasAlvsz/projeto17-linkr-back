@@ -5,13 +5,14 @@ import joinUrlMetadataAndCommentsWithPostData from "../services/joinUrlMetadataA
 
 export const getUserPageData = async (req, res) => {
     const { id } = req.params;
+    const userId = res.locals.userData;
     try {
         const user = res.locals.user;
         const result = await userPageRepository.getUserPostsById(id);
         const formattedPosts = await joinUrlMetadataAndCommentsWithPostData(
+            userId,
             result.rows,
         );
-
         res.send({
             username: user.username,
             userpic: user.userpic,

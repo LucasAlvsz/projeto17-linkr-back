@@ -11,6 +11,18 @@ export const insertComment = async (comment, postId, userId) => {
     );
 };
 
+export const getCommentByCommentId = async (commentId) => {
+    return await db.query(
+        `--sql
+        SELECT comments.*, users.username, users."pictureUrl"
+        FROM comments
+        JOIN users ON users.id = comments."userId"
+        WHERE comments.id = $1
+        `,
+        [commentId],
+    );
+};
+
 export const getCommentsByPostId = async (postId) => {
     return await db.query(
         `--sql
@@ -38,6 +50,7 @@ const commentsRepository = {
     insertComment,
     getCommentsByPostId,
     deleteCommentsByPostIdAndUserId,
+    getCommentByCommentId,
 };
 
 export default commentsRepository;

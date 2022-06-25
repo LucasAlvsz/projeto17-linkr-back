@@ -13,5 +13,8 @@ export const insertComment = async (req, res) => {
         return res.status(404).send({
             message: `Comment not inserted, cannot found post ${postId} of user ${userId}`,
         });
-    return res.status(201).send(rows[0]);
+    const newComment = await commentsRepository.getCommentByCommentId(
+        rows[0].id,
+    );
+    return res.status(201).send(newComment.rows[0]);
 };
